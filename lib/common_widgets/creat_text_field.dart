@@ -4,18 +4,19 @@ import 'package:flutter/material.dart';
 
 class CreatTextField extends StatelessWidget {
   final String label, title;
-  final Function validate, onnChanged;
+  final  Function validate, onSave;
   final double topMargin, textMargin, width;
   final Color fillColor;
   final int maxLines;
   final TextStyle titleStyle, labelStyle, errorStyle;
-
+  var controller;
   @override
   CreatTextField({
     Key key,
+    this.controller,
     this.label,
     this.validate,
-    this.onnChanged,
+    this.onSave,
     this.title,
     this.topMargin,
     this.textMargin,
@@ -58,13 +59,18 @@ class CreatTextField extends StatelessWidget {
               height:  48.85 ,
               width: width == null ? 265 : width,
               child: TextFormField(
+              controller: controller,
                 textDirection: TextDirection.rtl,
                 textAlign:
                      TextAlign.start,
 
 
-                onChanged: onnChanged,
-                validator: validate,
+                onSaved: (val){
+                  onSave();
+                },
+                validator: (val){
+                  validate();
+                },
                 // obscureText: obSecureText,
                 // keyboardType: keyboardType
                 // controller: controller,

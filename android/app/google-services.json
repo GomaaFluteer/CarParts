@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "372152541818",
+    "project_id": "carparts-3d290",
+    "storage_bucket": "carparts-3d290.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372152541818:android:f00f00c7d164e8218391c3",
+        "android_client_info": {
+          "package_name": "com.example.auto_parts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372152541818-rqaab32fm7eeonpolvu1dam336pvb0a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAytuIQqB_p3VZz9S6cp2ur2ylyzhPQXsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372152541818-rqaab32fm7eeonpolvu1dam336pvb0a7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "372152541818-u0ak87trpsko1ls8reod39mhjpnu1lb4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.autoParts"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

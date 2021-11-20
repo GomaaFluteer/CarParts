@@ -3,6 +3,7 @@ import 'package:auto_parts/main_screens/test1.dart';
 import 'package:auto_parts/main_screens/authincation_pages/register_screen.dart';
 import 'package:auto_parts/main_screens/splash_screen.dart';
 import 'package:auto_parts/utilities/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'common_widgets/creat_nav_bar.dart';
 import 'main_screens/home_screen.dart';
@@ -14,7 +15,9 @@ import 'main_screens/profile_screen.dart';
 //https://www.youtube.com/watch?v=XIyyZpZiHWc
 //https://www.youtube.com/watch?v=X7EYVc8P3yM
 //https://www.youtube.com/watch?v=4AUuhhSakro
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp()); // run app
 } // void main
 ///// ثبت النف بار والروت بتاع البرودكت

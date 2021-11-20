@@ -2,9 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:auto_parts/common_widgets/creat_button.dart';
 import 'package:auto_parts/common_widgets/creat_nav_bar.dart';
 import 'package:auto_parts/common_widgets/creat_text_field.dart';
-import 'package:auto_parts/main_screens/home_screen.dart';
 import 'package:auto_parts/main_screens/authincation_pages/register_screen.dart';
 import 'package:auto_parts/utilities/text_style.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,8 +14,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController =TextEditingController();
+  TextEditingController passwordController =TextEditingController();
+  FirebaseAuth auth =FirebaseAuth.instance;
+  GlobalKey<FormState> formKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    double w =MediaQuery.of(context).size.width;
+    double h =MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -35,32 +41,30 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  // margin:const EdgeInsets.symmetric(vertical: 10.0) ,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      FadeInDown(
-                        duration: Duration(seconds: 1),
-                        animate: true,
-                        child: CircleAvatar(
-                          radius: 100,
-                          backgroundImage: AssetImage("assets/images/l2.jpeg"),
+              Container(
+                // margin:const EdgeInsets.symmetric(vertical: 10.0) ,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FadeInDown(
+                      duration: Duration(seconds: 1),
+                      animate: true,
+                      child: CircleAvatar(
+                        radius: w*.3,
+                        backgroundImage: AssetImage("assets/images/l2.jpeg",
                         ),
                       ),
-                      Text(
-                        "Sign In",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "cairo"),
-                      )
-                    ],
-                  ),
+                    ),
+                    Text(
+                      "Sign In",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "cairo"),
+                    )
+                  ],
                 ),
               ),
               Expanded(
@@ -85,22 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+
                           FadeInDown(
                             duration: Duration(seconds: 1),
                             animate: true,
                             child: CreatTextField(
-                              title: "Enter your name",
-                              label: "user name ",
-                              labelStyle: BlackLabel.display5(context),
-                              titleStyle: BlackTitle.display5(context),
-                              // errorStyle: ,
-                              // validate: (){},
-                            ),
-                          ),
-                          FadeInDown(
-                            duration: Duration(seconds: 1),
-                            animate: true,
-                            child: CreatTextField(
+                              controller: emailController,
+                              onSave: (val){
+                                emailController.text=val;
+                              },
                               title: "Enter your Email",
                               label: "Email Adress ",
                               labelStyle: BlackLabel.display5(context),
@@ -109,32 +106,23 @@ class _LoginScreenState extends State<LoginScreen> {
 // validate: (){},
                             ),
                           ),
-                          FadeInUp(
+                          FadeInDown(
                             duration: Duration(seconds: 1),
                             animate: true,
                             child: CreatTextField(
+                              controller: passwordController,
+                              onSave: (val){
+                                passwordController.text=val;
+                              },
                               title: " Enter Your Password",
                               label: " password",
                               labelStyle: BlackLabel.display5(context),
                               titleStyle: BlackTitle.display5(context),
-
-// errorStyle: ,
+                              // errorStyle: ,
 // validate: (){},
                             ),
                           ),
-                          FadeInUp(
-                            duration: Duration(seconds: 1),
-                            animate: true,
-                            child: CreatTextField(
-                              title: " Enter Your Phone",
-                              label: " phone",
-                              labelStyle: BlackLabel.display5(context),
-                              titleStyle: BlackTitle.display5(context),
 
-// errorStyle: ,
-// validate: (){},
-                            ),
-                          ),
                           CreatButton(
                             topMargin: 14,
                             labelStyle: WhiteTitle.display5(context),
@@ -142,8 +130,18 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: 297,
                             color: Colors.blue,
                             label: " sign In",
-                            onTap: () {
-                              Navigator.pushReplacementNamed(context, CreatNavigationBar.route);
+                            onTap: () async{
+                              try{
+                                await auth.signInWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                                Navigator.pushReplacementNamed(context, CreatNavigationBar.route);
+                              }
+                              catch(e){
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text( "Error Login"+  e.message),
+                                ));
+                              }
                             },
                           ),
                           FadeInLeft(
